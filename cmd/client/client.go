@@ -43,17 +43,19 @@ func main() {
 	)
 
 	for _, v := range values {
-		message := pb.EchoMessage{Data: v}
+		func() {
+			ctx, cancel := context.WithTimeout(rootCtx, timeout)
+			defer cancel()
 
-		ctx, cancel := context.WithTimeout(rootCtx, timeout)
-		defer cancel()
+			message := pb.EchoMessage{Data: v}
 
-		res, err := client.Echo(ctx, &message)
-		if err != nil {
-			log.Println(err)
-			return
-		}
+			res, err := client.Echo(ctx, &message)
+			if err != nil {
+				log.Println(err)
+				return
+			}
 
-		fmt.Println(res)
+			fmt.Println(res)
+		}()
 	}
 }
