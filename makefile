@@ -39,7 +39,7 @@ _gen-go-out:
 
 _gen-proto-doc:
 	mkdir -p doc/proto
-	protoc --doc_out=html,index.html:./doc/proto proto/*.proto
+	bin/protoc/bin/protoc --doc_out=html,index.html:./doc/proto proto/*.proto
 
 run:
 	go run cmd/server/server.go &
