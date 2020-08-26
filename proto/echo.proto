@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package echo;
+option go_package = "internal/pb";
+
+service Echo {
+    rpc Echo (EchoMessage) returns (EchoResponse) {}
+}
+
+message EchoMessage {
+    string data = 1;
+}
+
+message EchoResponse {
+    string data = 1;
+}
+
