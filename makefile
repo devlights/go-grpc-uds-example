@@ -1,11 +1,24 @@
 usage:
-	@echo '-----------------------------------------------------------------------------'
-	@echo '以下のどれかのタスクを指定します.'
-	@echo '  - install-requirements -- grpcを実行するのに必要なものをインストールします.'
-	@echo '  - protoc               -- protocを実行します.'
-	@echo '  - run                  -- サンプルを実行します.'
-	@echo '-----------------------------------------------------------------------------'
-
+        @echo '-----------------------------------------------------------------------------'
+        @echo '以下のどれかのタスクを指定します.'
+        @echo '  - install-requirements -- grpcを実行するのに必要なものをインストールします.'
+        @echo '                              - protoc は プロジェクトディレクトリ直下の bin にインストールされます.'
+        @echo '                              - protoc-gen-go は $(go env GOPATH)/bin にインストールされます.'
+        @echo '                              - protoc-gen-doc は $(go env GOPATH)/bin にインストールされます.'
+        @echo '  - protoc               -- protocを実行します.'
+        @echo '                              - protoファイルは protoディレクトリ の下に存在しているとします.'
+        @echo '                              - 生成されたgoファイルは internal ディレクトリの下に配置されます.'
+        @echo '                              - 生成されたdocファイルは doc ディレクトリの下に配置されます.'
+        @echo '  - run                  -- サンプルを実行します.'
+        @echo '                              - サーバのサンプル は、      cmd/server/main.go に存在しているとします.'
+        @echo '                              - クライアントのサンプル は、 cmd/client/main.go に存在しているとします.'
+        @echo '-----------------------------------------------------------------------------'
+        @echo '[REFERENCES]'
+        @echo '  - https://developers.google.com/protocol-buffers/docs/gotutorial'
+        @echo '  - https://devlights.hatenablog.com/entry/2020/08/26/130037'
+        @echo '  - https://qiita.com/marnie_ms4/items/4582a1a0db363fe246f3'
+        @echo '-----------------------------------------------------------------------------'
+	
 install-requirements: _download-protoc _unzip-protoc _locate-protoc _cleanup-tmp _goget-grpc
 
 _download-protoc:
