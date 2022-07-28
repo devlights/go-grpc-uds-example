@@ -11,11 +11,12 @@ tasks:
       - rm -rf bin/protoc
       - task: locate-protoc
       - rm -rf ./tmp
-      - task: goget-grpc
+      - go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+      - go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
   download-protoc:
     dir: tmp
     cmds:
-      - curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.13.0/protoc-3.13.0-linux-aarch_64.zip --output protoc.zip
+      - curl -L https://github.com/protocolbuffers/protobuf/releases/download/v21.4/protoc-21.4-linux-x86_64.zip --output protoc.zip
   unzip-protc:
     dir: tmp
     cmds:
@@ -24,18 +25,11 @@ tasks:
     dir: tmp
     cmds:
       - mv -f ./protoc/ ../bin
-  goget-grpc:
-    cmds:
-      - go get -u google.golang.org/grpc
-      - go get -u github.com/golang/protobuf/protoc-gen-go
-      - go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc
   protoc:
     desc: gen protoc
     cmds:
       - mkdir -p internal
-      - bin/protoc/bin/protoc --go_out=plugins=grpc:./ proto/*.proto
-      - mkdir -p doc/proto
-      - bin/protoc/bin/protoc --doc_out=html,index.html:./doc/proto proto/*.proto
+      - bin/protoc/bin/protoc --go_out=. --go-grpc_out=require_unimplemented_servers=false:. proto/*.proto
   run:
     desc: run
     cmds:

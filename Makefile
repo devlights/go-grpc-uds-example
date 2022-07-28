@@ -8,7 +8,6 @@ usage:
 	@echo '  - protoc               -- protocを実行します.'
 	@echo '                              - protoファイルは protoディレクトリ の下に存在しているとします.'
 	@echo '                              - 生成されたgoファイルは internal ディレクトリの下に配置されます.'
-	@echo '                              - 生成されたdocファイルは doc ディレクトリの下に配置されます.'
 	@echo '  - run                  -- サンプルを実行します.'
 	@echo '                              - サーバのサンプル は、      cmd/server/main.go に存在しているとします.'
 	@echo '                              - クライアントのサンプル は、 cmd/client/main.go に存在しているとします.'
@@ -24,7 +23,7 @@ install-requirements: _download-protoc _unzip-protoc _locate-protoc _cleanup-tmp
 _download-protoc:
 	mkdir -p tmp && \
 	cd tmp && \
-	curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.13.0/protoc-3.13.0-linux-aarch_64.zip --output protoc.zip
+	curl -L https://github.com/protocolbuffers/protobuf/releases/download/v21.4/protoc-21.4-linux-x86_64.zip --output protoc.zip
 
 _unzip-protoc:
 	cd tmp && \
@@ -40,19 +39,14 @@ _cleanup-tmp:
 	rm -rf ./tmp
 
 _goget-grpc:
-	go get -u google.golang.org/grpc
-	go get -u github.com/golang/protobuf/protoc-gen-go
-	go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
-protoc: _gen-go-out _gen-proto-doc
+protoc: _gen-go-out
 
 _gen-go-out:
 	mkdir -p internal
-	bin/protoc/bin/protoc --go_out=plugins=grpc:./ proto/*.proto
-
-_gen-proto-doc:
-	mkdir -p doc/proto
-	bin/protoc/bin/protoc --doc_out=html,index.html:./doc/proto proto/*.proto
+	bin/protoc/bin/protoc --go_out=. --go-grpc_out=require_unimplemented_servers=false:. proto/*.proto
 
 run:
 	go run cmd/server/server.go &
