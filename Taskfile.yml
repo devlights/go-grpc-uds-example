@@ -16,7 +16,7 @@ tasks:
   _download-protoc:
     dir: tmp
     cmds:
-      - curl -L https://github.com/protocolbuffers/protobuf/releases/download/v21.4/protoc-21.4-linux-x86_64.zip --output protoc.zip
+      - curl -L https://github.com/protocolbuffers/protobuf/releases/download/v21.12/protoc-21.12-linux-x86_64.zip --output protoc.zip
   _unzip-protoc:
     dir: tmp
     cmds:
