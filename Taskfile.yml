@@ -5,23 +5,23 @@ tasks:
     desc: install requirements
     cmds:
       - mkdir tmp
-      - task: download-protoc
-      - task: unzip-protc
+      - task: _download-protoc
+      - task: _unzip-protoc
       - mkdir -p bin
       - rm -rf bin/protoc
-      - task: locate-protoc
+      - task: _locate-protoc
       - rm -rf ./tmp
       - go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
       - go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-  download-protoc:
+  _download-protoc:
     dir: tmp
     cmds:
       - curl -L https://github.com/protocolbuffers/protobuf/releases/download/v21.4/protoc-21.4-linux-x86_64.zip --output protoc.zip
-  unzip-protc:
+  _unzip-protoc:
     dir: tmp
     cmds:
       - unzip ./protoc.zip -d protoc
-  locate-protoc:
+  _locate-protoc:
     dir: tmp
     cmds:
       - mv -f ./protoc/ ../bin
