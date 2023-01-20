@@ -1,7 +1,7 @@
 # go-grpc-uds-example
 gRPC with Unix domain socket (UDS) example by golang
 
-It can be executed using make or [go-task](https://taskfile.dev/#/).
+It can be executed using [go-task](https://taskfile.dev/#/).
 
 ```sh
 $ task --list
@@ -17,34 +17,16 @@ task: Available tasks for this project:
 task install-requirements
 ```
 
-or
-
-```sh
-make install-requirements
-```
-
 ## Run protoc
 
 ```sh
 task protoc
 ```
 
-or 
-
-```sh
-make protoc
-```
-
 ## Run Server and Client
 
 ```sh
 task run
-```
-
-or
-
-```sh
-make run
 ```
 
 ## Example
