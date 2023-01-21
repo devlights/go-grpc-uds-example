@@ -13,6 +13,7 @@ tasks:
       - rm -rf ./tmp
       - go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
       - go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+      - rm -rf ./text-files; git clone --quiet https://github.com/devlights/text-files
   _download-protoc:
     dir: tmp
     cmds:
@@ -35,6 +36,6 @@ tasks:
     cmds:
       - go run cmd/server/server.go &
       - sleep 1
-      - go run cmd/client/client.go
+      - time go run cmd/client/client.go
       - sleep 1
       - pkill server

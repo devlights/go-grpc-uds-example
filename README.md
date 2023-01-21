@@ -34,12 +34,12 @@ task run
 ```sh
 $ task install-requirements
 task: [install-requirements] mkdir tmp
-task: [download-protoc] curl -L https://github.com/protocolbuffers/protobuf/releases/download/v21.4/protoc-21.4-linux-x86_64.zip --output protoc.zip
+task: [_download-protoc] curl -L https://github.com/protocolbuffers/protobuf/releases/download/v21.12/protoc-21.12-linux-x86_64.zip --output protoc.zip
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-100 1547k  100 1547k    0     0  1345k      0  0:00:01  0:00:01 --:--:-- 3530k
-task: [unzip-protc] unzip ./protoc.zip -d protoc
+100 1548k  100 1548k    0     0  4254k      0 --:--:-- --:--:-- --:--:-- 4254k
+task: [_unzip-protoc] unzip ./protoc.zip -d protoc
 Archive:  ./protoc.zip
   inflating: protoc/bin/protoc       
   inflating: protoc/include/google/protobuf/any.proto  
@@ -57,10 +57,11 @@ Archive:  ./protoc.zip
   inflating: protoc/readme.txt       
 task: [install-requirements] mkdir -p bin
 task: [install-requirements] rm -rf bin/protoc
-task: [locate-protoc] mv -f ./protoc/ ../bin
+task: [_locate-protoc] mv -f ./protoc/ ../bin
 task: [install-requirements] rm -rf ./tmp
 task: [install-requirements] go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 task: [install-requirements] go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+task: [install-requirements] rm -rf ./text-files; git clone --quiet https://github.com/devlights/text-files
 
 
 $ task protoc

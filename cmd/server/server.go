@@ -1,3 +1,13 @@
+// gRPC with Unix Domain Socket example (server side)
+//
+// # REFERENCES
+// 	- https://qiita.com/marnie_ms4/items/4582a1a0db363fe246f3
+// 	- http://yamahiro0518.hatenablog.com/entry/2016/02/01/215908
+// 	- https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/client
+// 	- https://stackoverflow.com/a/46279623
+// 	- https://stackoverflow.com/a/18479916
+//	- https://qiita.com/hnakamur/items/848097aad846d40ae84b
+
 package main
 
 import (
@@ -16,18 +26,11 @@ const (
 )
 
 func main() {
-	// - https://qiita.com/marnie_ms4/items/4582a1a0db363fe246f3
-	// - http://yamahiro0518.hatenablog.com/entry/2016/02/01/215908
-
-	cleanup := func() {
-		if _, err := os.Stat(sockAddr); err == nil {
-			if err := os.RemoveAll(sockAddr); err != nil {
-				log.Fatal(err)
-			}
+	if _, err := os.Stat(sockAddr); !os.IsNotExist(err) {
+		if err := os.RemoveAll(sockAddr); err != nil {
+			log.Fatal(err)
 		}
 	}
-
-	cleanup()
 
 	listener, err := net.Listen(protocol, sockAddr)
 	if err != nil {
